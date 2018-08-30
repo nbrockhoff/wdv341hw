@@ -34,11 +34,16 @@
         };
 
         function formatNumber($number){
+            if ($number <='0' || $number ==''){
+                 $number = 0.0;
+                }
             echo number_format($number);
         };
 
         function formatMoney($money){
             $money = floatval($money);
+
+            if ($money <='0' || $money ==''){ $money = 0.0;}
             echo money_format("%i", $money);
         }
 ?>
@@ -75,7 +80,7 @@
         <p>You were born on <strong> <?php formatDate($date, 'm/d/Y'); ?> </strong>(or <em><?php formatDate($date, 'd/m/Y'); ?> </em>if you're from across the pond). It was a <?php formatDate($date, 'l'); ?>.
 
         <p>Your message was:
-        <br><center>"<?php formatString($string); ?>"</center>.
+        <br><center>"<?php formatString($string); ?>"</center>
         <br>It contains <strong><?php echo stringCharCount($string); ?></strong> characters, and <em><?php wordSearch($string, DMACC); ?></em> DMACC - fascinating.
         </p>
 
