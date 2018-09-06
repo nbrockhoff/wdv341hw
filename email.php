@@ -1,56 +1,58 @@
 <?php
 	class Email 
 	{
-		public $sendFrom = "nkbrockhoff@gmail.com";
-		public $sendTo;
-		public $message;
-		public $subject;
-		public $body;
+		private $senderAddress = "";
+		private $sendToAddress = "";
+		private $messageLine = "";
+		private $subjectLine = "";
+		private $body = "";
 
-		function __construct()
+		public function __construct()
 		{
 		}
+		// SET
 
-		function set_sender($new_sender) {
-			$this->sendFrom = $new_sender;
+		public function setSenderAddress($inSenderAddress) {
+			$this->senderAddress = $inSenderAddress;
 		}
-		function get_sender(){
-			return $this->sendFrom;
+		public function setSendToAddress($inSendToAddress) {
+			$this->sendToAddress = $inSendToAddress;
+		}
+		public function setMessageLine($inMessageLine) {
+			$this->messageLine = $inMessageLine;
+		}
+		public function setSubjectLine($inSubjectLine) {
+			$this->subjectLine = $inSubjectLine;
+		}
+		public function setBody(){
+			$this->body .= "To: ".$this->getSendToAddress."\r\n";
+			$this->body .= "From: ".$this->getSenderAddress."\r\n";
+			$this->body .= "Message: ".$this->getMessageLine;
+			}
+
+		//GET
+		public function getSenderAddress(){
+			return $this->senderAddress;
 		}
 
-		function set_sendTo($new_sendTo) {
-			$this->sendTo = $new_sendTo;
-		}
-		function get_recipient(){	
-			return $this->sendTo;
+		public function getSendToAddress(){	
+			return $this->sendToAddress;
 		}
 
-		function set_message($new_message) {
-			$this->message = $new_message;
-		}
-		function get_message(){
-			return $this->message;
-		}
-
-		function set_subject($new_subject) {
-			$this->subject = $new_subject;
+		public function getMessageLine(){
+			return $this->messageLine;
 		} 
-		function get_subject(){
-			return $this->subject;
+		
+		public function getSubjectLine(){
+			return $this->subjectLine;
 		}
 
-		function set_body(){
-		$this->body .= "To: ".$this->sendTo."\r\n";
-		$this->body .= "From: ".$this->sendFrom."\r\n";
-		$this->body .="Message: ".$this->message;
-		}
-
-		function get_body(){
+		public function getBody(){
 			return $this->body;
 		}
 
-		function sendEmail(){	
-			mail($this->sendTo,$this->subject,$this->body,$this->sendFrom);
+		public function sendPHPEmail(){	
+			mail($this->sendToAddress,$this->subjectLine,$this->messageLine,"From: ".$this->senderAddress);
 		}			
 	}	
 ?>

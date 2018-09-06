@@ -1,17 +1,20 @@
 <?php require_once 'email.php'; 
 
-
   if(isset($_POST['Submit']))
   {
-    $newEmail = new Email($_POST['contact_name']);
-    $newEmail->set_sendTo("nderrb@gmail.com");
-    $newEmail->set_sender($_POST['contact_email']);
-    $newEmail->set_message($_POST['contact_comments']);
-    $newEmail->set_subject($_POST['contact_reason']);
-    $newEmail->set_body();
+    $newEmail = new Email();
 
-    $newEmail->sendEmail();
-  }
+    $newEmail->setSendToAddress('nkbrockhoff@dmacc.edu');
+
+    $newEmail->setMessageLine($_POST['contact_comments']);
+
+    $newEmail->setBody();
+    $newEmail->setSenderAddress($_POST['contact_email']);
+    $newEmail->setSubjectLine($_POST['contact_reason']);
+    $newEmail->setBody();
+
+    $newEmail->sendPHPEmail();
+  } 
 ?>
     <!doctype html>
 <html>
@@ -100,10 +103,9 @@
     ?> <h2>Success - Your form has been emailed!
     <br><small>Thank you for your feedback.</small></h2>
     <?php
-    echo "Name: ".$_POST['contact_name'];
-    echo "<br>Email: ".$_POST['contact_email'];
-    echo "<br>Subject : ".$_POST['contact_reason'];
-    echo "<br>Email: ".$_POST['contact_comments'];
+    echo "<br>Customer Email: ".$newEmail->getSenderAddress();
+    echo "<br>Subject: ".$newEmail->getSubjectLine();
+    echo "<br>Email: ".$newEmail->getMessageLine();
       }
   
   ?>
