@@ -43,8 +43,8 @@
     <label><input type="Radio" name="Lannister" id="Tyrion" value="Tyrion"> Tyrion</label>
   </p>
   <p>Baseborn:
-    <label><input type="checkbox" name="Waters"  id="Gendry" value="Gendry">Gendry</label>
-    <label><input type="checkbox" name="Snow" id="Jon" value="Jon">Jon</label>
+    <label><input type="checkbox" name="Baseborn-Waters"  id="Gendry" value="Gendry Waters">Gendry Waters</label>
+    <label><input type="checkbox" name="Baseborn-Snow" id="Jon" value="Jon Snow">Jon Snow</label>
   </p>
   <p>Baratheon:
     <select name="Baratheon">
