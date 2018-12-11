@@ -17,22 +17,39 @@ try {
 	
 	$_SESSION[ 'sessionMessage' ]=null;
 	
-	$stmt = $DB->prepare( 'SELECT * FROM wdv341_event' );
+	$stmt = $DB->prepare( 'SELECT * FROM wdv341_event ORDER BY event_date DESC' );
 
 
 	$stmt->execute();
 
 	$result = $stmt->fetchAll();
 
+    $today = getdate();
+
 
 	foreach ( $result as $row ) {
+
+        $eDate = date_create_from_format('Y-m-d', $row['event_date']);
+        
+
 		$displayResult .= "<tr>";
-		$displayResult .= "<td><a href='eventDisplay.php?event_id=" . $row[ 'event_id' ] . "'>" . $row[ 'event_name' ] . "</a></td>";
-		$displayResult .= "<td>" . $row[ 'event_description' ] . " </td>";
-		$displayResult .= "<td>" . $row[ 'event_presenter' ] . "</td>";
-		$displayResult .= "<td>" . $row[ 'event_date' ] . "</td>";
+        $displayResult .= "<td><a href='eventDisplay.php?event_id=" . $row[ 'event_id' ] . "'>";
+        
+        
+        if ($today[year]< $eDate->format('Y') || $today[year] == $eDate->format('Y') && $today[mon]< $eDate->format('m') ){
+            $displayResult .= "<em>" . $row[ 'event_name' ] . "</em>";
+            } elseif ($today[year] == $eDate->format('Y') && $today[mon] == $eDate->format('m')){
+                $displayResult .= "<strong>" . $row[ 'event_name' ] . "</strong>";}
+                else {
+                    $displayResult .= $row[ 'event_name' ] ;
+                }
+            $displayResult .= "</a></td>";
+        $displayResult .= "<td>" . $row[ 'event_description' ] . " </td>";
+        $displayResult .= "<td>" . $row[ 'event_presenter' ] . "</td>";
+        
 		//$displayResult .= "<td>" . $row[ 'event_time' ] . "</td>";
 
+        $displayResult .= "<td>" . $row[ 'event_date' ] . "</td>";
 		$displayResult .= "<td><a href='eventEdit.php?event_id=" . $row[ 'event_id' ] . "'>Edit Event</a></td>";
 		$displayResult .= "<td><a href='eventDelete.php?event_id=" . $row[ 'event_id' ] . "'>Delete Event</a></td>";
 		$displayResult .= "</tr>";
@@ -52,7 +69,13 @@ try {
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>N.Brockhoff | Select Events</title>
-	<link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        strong {
+            color: darkred;
+            font-weight: bold;
+        }
+        </style>
 </head>
 
 <body>
